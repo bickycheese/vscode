@@ -156,6 +156,7 @@ const viewDescriptor: IJSONSchema = {
 
 const remoteViewDescriptor: IJSONSchema = {
 	type: 'object',
+	required: ['id', 'name'],
 	properties: {
 		id: {
 			description: localize('vscode.extension.contributes.view.id', 'Identifier of the view. This should be unique across all views. It is recommended to include your extension id as part of the view id. Use this to register a data provider through `vscode.window.registerTreeDataProviderForView` API. Also to trigger activating your extension by registering `onView:${id}` event to `activationEvents`.'),
@@ -372,7 +373,7 @@ class ViewsExtensionHandler implements IWorkbenchContribution {
 
 			viewContainer = this.viewContainersRegistry.registerViewContainer({
 				id,
-				title: { value: title, original: title }, extensionId,
+				title, extensionId,
 				ctorDescriptor: new SyncDescriptor(
 					ViewPaneContainer,
 					[id, { mergeViewWithContainerWhenSingleView: true }]
@@ -462,7 +463,7 @@ class ViewsExtensionHandler implements IWorkbenchContribution {
 						name: item.name,
 						when: ContextKeyExpr.deserialize(item.when),
 						containerIcon: icon || viewContainer?.icon,
-						containerTitle: item.contextualTitle || viewContainer?.title.value,
+						containerTitle: item.contextualTitle || viewContainer?.title,
 						canToggleVisibility: true,
 						canMoveView: viewContainer?.id !== REMOTE,
 						treeView: type === ViewType.Tree ? this.instantiationService.createInstance(CustomTreeView, item.id, item.name) : undefined,

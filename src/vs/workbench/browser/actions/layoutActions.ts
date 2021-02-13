@@ -462,7 +462,7 @@ MenuRegistry.appendMenuItem(MenuId.MenubarAppearanceMenu, {
 	command: {
 		id: ToggleMenuBarAction.ID,
 		title: nls.localize({ key: 'miShowMenuBar', comment: ['&& denotes a mnemonic'] }, "Show Menu &&Bar"),
-		toggled: ContextKeyExpr.and(IsMacNativeContext.toNegated(), ContextKeyExpr.notEquals('config.window.menuBarVisibility', 'hidden'), ContextKeyExpr.notEquals('config.window.menuBarVisibility', 'toggle'))
+		toggled: ContextKeyExpr.and(IsMacNativeContext.toNegated(), ContextKeyExpr.notEquals('config.window.menuBarVisibility', 'hidden'), ContextKeyExpr.notEquals('config.window.menuBarVisibility', 'toggle'), ContextKeyExpr.notEquals('config.window.menuBarVisibility', 'compact'))
 	},
 	when: IsMacNativeContext.toNegated(),
 	order: 0
@@ -678,7 +678,7 @@ export class MoveFocusedViewAction extends Action {
 			.map(viewletId => {
 				return {
 					id: viewletId,
-					label: this.viewDescriptorService.getViewContainerById(viewletId)!.title.value
+					label: this.viewDescriptorService.getViewContainerById(viewletId)!.title
 				};
 			}));
 
@@ -699,7 +699,7 @@ export class MoveFocusedViewAction extends Action {
 			.map(panel => {
 				return {
 					id: panel.id,
-					label: this.viewDescriptorService.getViewContainerById(panel.id)!.title.value
+					label: this.viewDescriptorService.getViewContainerById(panel.id)!.title
 				};
 			}));
 
